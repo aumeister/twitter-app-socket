@@ -32,11 +32,11 @@ io.on("connection", (socket) => {
 	});
 	// join a room
 	socket.on("Joined group", room => {
-		socket.join(room)
+		socket.join(room);
 	})
 	// send and get group message
-	socket.on("sendGroupMessage", ({ sender, text, room }) => {
-		io.to(room).emit("getGroupMessage", { sender, text });
+	socket.on("sendGroupMessage", ({ sender, text, conversationId }) => {
+		io.to(conversationId).emit("getGroupMessage", { sender, text });
 	});
 	// when disconnect
 	socket.on("disconnect", () => {
