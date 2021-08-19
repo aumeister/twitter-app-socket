@@ -18,9 +18,6 @@ const getUser = (userId) => {
 };
 
 io.on("connection", (socket) => {
-	// when connected
-	// console.log("a user connected");
-	// console.log(users);
 	// take userId and socketId from user
 	socket.on("addUser", (userId) => {
 		addUser(userId, socket.id);
@@ -33,9 +30,14 @@ io.on("connection", (socket) => {
 			? io.to(user.socketId).emit("getMessage", { senderId, text })
 			: io.to(senderId.socketId).emit("getMessage", { senderId, text });
 	});
-	// socket.on("sendGroupMessage", ({ senderId, group, text }) => {
-	// 	io.to(roomUsers).emit("getGroupMessage", { senderId, text });
-	// });
+	// join a room
+	socket.on("Joined group", room => {
+		socket.join(room)
+	})
+	// send and get group message
+	socket.on("sendGroupMessage", ({ sender, text, room }) => {
+		io.to(room).emit("getGroupMessage", { sender, text });
+	});
 	// when disconnect
 	socket.on("disconnect", () => {
 		removeUser(socket.id);
