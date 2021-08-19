@@ -33,9 +33,9 @@ io.on("connection", (socket) => {
 			? io.to(user.socketId).emit("getMessage", { senderId, text })
 			: io.to(senderId.socketId).emit("getMessage", { senderId, text });
 	});
-	socket.on("sendGroupMessage", ({ senderId, group, text }) => {
-		io.to(roomUsers).emit("getGroupMessage", { senderId, text });
-	});
+	// socket.on("sendGroupMessage", ({ senderId, group, text }) => {
+	// 	io.to(roomUsers).emit("getGroupMessage", { senderId, text });
+	// });
 	// when disconnect
 	socket.on("disconnect", () => {
 		removeUser(socket.id);
